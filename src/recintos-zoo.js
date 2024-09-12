@@ -1,11 +1,11 @@
 class RecintosZoo {
     constructor() {
         this.recintos = [
-            { numero: 1, bioma: 'savana', capacidade: 10, ocupacao: 3 },  // 3 macacos
-            { numero: 2, bioma: 'floresta', capacidade: 5, ocupacao: 0 }, // vazio
-            { numero: 3, bioma: 'savana e rio', capacidade: 7, ocupacao: 1 }, // 1 gazela
-            { numero: 4, bioma: 'rio', capacidade: 8, ocupacao: 0 }, // vazio
-            { numero: 5, bioma: 'savana', capacidade: 9, ocupacao: 1 } // 1 leão
+            { numero: 1, bioma: 'savana', capacidade: 10, ocupacao: 3 },
+            { numero: 2, bioma: 'floresta', capacidade: 5, ocupacao: 0 }, 
+            { numero: 3, bioma: 'savana e rio', capacidade: 7, ocupacao: 1 }, 
+            { numero: 4, bioma: 'rio', capacidade: 8, ocupacao: 0 }, 
+            { numero: 5, bioma: 'savana', capacidade: 9, ocupacao: 1 }
         ];
 
         this.animaisValidos = {
