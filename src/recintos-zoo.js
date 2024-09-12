@@ -1,33 +1,49 @@
 class RecintosZoo {
-
-    analisaRecintos(animal, quantidade) {
-        const recintos = [
-            { id: 1, tipo: 'MACACO', capacidade: 10, ocupacao: 4 },
-            { id: 2, tipo: 'MACACO', capacidade: 5, ocupacao: 2 },
-            { id: 3, tipo: 'MACACO', capacidade: 7, ocupacao: 5 },
-            { id: 4, tipo: 'CROCODILO', capacidade: 8, ocupacao: 0 }
+    constructor() {
+        this.recintos = [
+            { numero: 1, bioma: 'savana', capacidade: 10, ocupacao: 3 },  // 3 macacos
+            { numero: 2, bioma: 'floresta', capacidade: 5, ocupacao: 0 }, // vazio
+            { numero: 3, bioma: 'savana e rio', capacidade: 7, ocupacao: 1 }, // 1 gazela
+            { numero: 4, bioma: 'rio', capacidade: 8, ocupacao: 0 }, // vazio
+            { numero: 5, bioma: 'savana', capacidade: 9, ocupacao: 1 } // 1 leão
         ];
 
-        if (animal !== 'MACACO' && animal !== 'CROCODILO') {
-            return { erro: "Animal inválido", recintosViaveis: false };
+        this.animaisValidos = {
+            LEAO: { tamanho: 3, bioma: 'savana', carnivoro: true },
+            LEOPARDO: { tamanho: 2, bioma: 'savana', carnivoro: true },
+            CROCODILO: { tamanho: 3, bioma: 'rio', carnivoro: true },
+            MACACO: { tamanho: 1, bioma: ['savana', 'floresta'], carnivoro: false },
+            GAZELA: { tamanho: 2, bioma: 'savana', carnivoro: false },
+            HIPOPOTAMO: { tamanho: 4, bioma: ['savana', 'rio'], carnivoro: false }
+        };
+    }
+
+    analisaRecintos(animal, quantidade) {
+        if (!this.animaisValidos[animal]) {
+            return { erro: "Animal inválido" };
         }
 
         if (quantidade <= 0) {
-            return { erro: "Quantidade inválida", recintosViaveis: false };
+            return { erro: "Quantidade inválida" };
         }
 
-        const recintosViaveis = recintos.filter(recinto => recinto.tipo === animal && recinto.capacidade >= recinto.ocupacao + quantidade);
+        const especie = this.animaisValidos[animal];
+        let recintosViaveis = [];
+
+        for (let recinto of this.recintos) {
+            const espacoLivre = recinto.capacidade - recinto.ocupacao;
+            if (especie.bioma.includes(recinto.bioma) && espacoLivre >= especie.tamanho * quantidade) {
+                recintosViaveis.push(`Recinto ${recinto.numero} (espaço livre: ${espacoLivre - especie.tamanho * quantidade} total: ${recinto.capacidade})`);
+            }
+        }
 
         if (recintosViaveis.length === 0) {
-            return { erro: "Não há recinto viável", recintosViaveis: false };
+            return { erro: "Não há recinto viável" };
         }
 
-        const detalhesRecintos = recintosViaveis.map(recinto => 
-            `Recinto ${recinto.id} (espaço livre: ${recinto.capacidade - recinto.ocupacao} total: ${recinto.capacidade})`
-        );
-
-        return { erro: null, recintosViaveis: detalhesRecintos };
+        return { recintosViaveis };
     }
 }
 
-export { RecintosZoo as RecintosZoo };
+export { RecintosZoo };
+
